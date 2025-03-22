@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>NLP APP | Registration Page</title>
+        <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
+
+    </head>
+
+    <body style="text-align: center; background-color: beige;">
+        <h1> NLP APP</h1>
+
+        <h3>Register Here</h3>
+
+        <form action="/perform_registration" method="post">
+
+            <label>Name</label> <br>
+            <input type="text" name="user_name"> <br>
+
+            <label>Email</label> <br>
+            <input type="email" name="user_email"> <br>
+
+            <label>Password</label> <br>
+            <input type="password" name="user_password"> <br> <br>
+
+            <input type="submit" value="Register">
+
+        </form>
+
+        <p>Already Registered? <a href="/">Login Here</a> </p>
+
+    </body>
+
+</html>
