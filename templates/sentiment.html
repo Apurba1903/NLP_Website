@@ -2,28 +2,146 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Viewport meta tag -->
         <title>Sentiment Analysis</title>
         <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
+        <!-- Add Google Fonts for better typography -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <!-- Add Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                text-align: center;
+                background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding: 20px; /* Add padding to prevent content from touching edges */
+            }
+            h1 {
+                font-size: 2.5rem;
+                color: #333;
+                margin-bottom: 10px;
+            }
+            h2 {
+                font-size: 2rem;
+                color: #555;
+                margin-bottom: 20px;
+            }
+            form {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 600px; /* Limit form width on larger screens */
+                text-align: left;
+            }
+            label {
+                font-size: 1rem;
+                color: #333;
+                margin-bottom: 10px;
+                display: block;
+            }
+            textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1rem;
+                resize: vertical; /* Allow vertical resizing */
+                transition: border-color 0.3s ease;
+            }
+            textarea:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+            input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+            input[type="submit"]:hover {
+                background: #0056b3;
+            }
+            .results {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 600px; /* Limit results width on larger screens */
+                text-align: left;
+                margin-top: 20px; /* Add space between form and results */
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                margin: 10px 0;
+                font-size: 1rem;
+                color: #333;
+            }
+            .message {
+                margin-bottom: 20px;
+                font-size: 1rem;
+                color: red;
+            }
+
+            /* Media Queries for smaller devices */
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 2rem; /* Smaller font size for smaller screens */
+                }
+                h2 {
+                    font-size: 1.5rem; /* Smaller font size for smaller screens */
+                }
+                form, .results {
+                    padding: 20px; /* Reduce padding for smaller screens */
+                }
+                textarea {
+                    font-size: 0.9rem; /* Smaller font size for textarea */
+                }
+                input[type="submit"] {
+                    font-size: 0.9rem; /* Smaller font size for the button */
+                }
+                li {
+                    font-size: 0.9rem; /* Smaller font size for list items */
+                }
+            }
+        </style>
     </head>
-    <body style="text-align: center; background-color: beige;">
-        
+    <body>
         <h1>Sentiment Analysis</h1>
         <form action="/perform_sentiment" method="post">
-            <br>
-            <label>Type Your Text Here</label> <br> <br>
-            <textarea name="sentiment_text" rows="10" cols="50"></textarea> <br> <br>
+            <label>Type Your Text Here</label>
+            <textarea name="sentiment_text" rows="10" placeholder="Enter your text here..."></textarea>
             <input type="submit" value="Analyze Sentiment">
         </form>
     
         {% if response %}
-            <h2>Sentiment Analysis Results:</h2>
-            <div style="text-align: left; display: inline-block;">
+            <div class="results">
+                <h2>Sentiment Analysis Results:</h2>
                 <ul>
                     {% if response.get('error') %}
                         <li><strong>Error:</strong> {{ response.error }}</li>
                     {% else %}
                         <li><strong>Sentiment Type:</strong> {{ response.get('type', 'N/A') }}</li>
-                        <li><strong>Score:</strong> {{ response.get('score', 'N/A') | round(3) }}</li>                        
+                        <li><strong>Score:</strong> {{ response.get('score', 'N/A') | round(3) }}</li>
                         <li><strong>Keywords:</strong></li>
                         <ul>
                             {% for keyword in response.get('keywords', []) %}
@@ -34,6 +152,5 @@
                 </ul>
             </div>
         {% endif %}
-
     </body>
 </html>

@@ -1,40 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-    
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>NLP APP | Login Page</title>
         <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
+        <!-- Add Google Fonts for better typography -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <!-- Add Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                text-align: center;
+                background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            h1 {
+                font-size: 2.5rem;
+                color: #333;
+                margin-bottom: 10px;
+            }
+            h3 {
+                font-size: 1.5rem;
+                color: #555;
+                margin-bottom: 20px;
+            }
+            form {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                width: 300px;
+                text-align: left;
+            }
+            label {
+                font-size: 1rem;
+                color: #333;
+                margin-bottom: 5px;
+                display: block;
+            }
+            input[type="email"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1rem;
+                transition: border-color 0.3s ease;
+            }
+            input[type="email"]:focus,
+            input[type="password"]:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+            input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+            input[type="submit"]:hover {
+                background: #0056b3;
+            }
+            p {
+                font-size: 1rem;
+                color: #555;
+                margin-top: 20px;
+            }
+            a {
+                color: #007bff;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+            a:hover {
+                color: #0056b3;
+            }
+            .message {
+                margin-bottom: 20px;
+                font-size: 1rem;
+            }
+            .error {
+                color: red;
+            }
+            .success {
+                color: green;
+            }
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 2rem; /* Smaller font size for smaller screens */
+                }
+                h3 {
+                    font-size: 1.2rem; /* Smaller font size for smaller screens */
+                }
+                form {
+                    width: 90%; /* Make the form wider on smaller screens */
+                    padding: 20px; /* Reduce padding for smaller screens */
+                }
+                input[type="email"],
+                input[type="password"] {
+                    font-size: 0.9rem; /* Smaller font size for input fields */
+                }
+                input[type="submit"] {
+                    font-size: 0.9rem; /* Smaller font size for the button */
+                }
+                p {
+                    font-size: 0.9rem; /* Smaller font size for the link text */
+                }
+            }
 
+        </style>
     </head>
-
-    <body style="text-align: center; background-color: beige;">
-        <h1> NLP APP</h1>
-
+    <body>
+        <h1>NLP APP</h1>
         <h3>Login Here</h3>
 
         {% if message %}
-            {% if message_type == 'error' %}
-                <p style="color: red;">{{ message }}</p>
-            {% else %}
-                <p style="color: green;">{{ message }}</p>
-            {% endif %}
+            <div class="message {% if message_type == 'error' %}error{% else %}success{% endif %}">
+                {{ message }}
+            </div>
         {% endif %}
 
         <form action="/perform_login" method="post">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="user_email" placeholder="Enter your email" required>
 
-            <label>Email</label> <br>
-            <input type="email" name="user_email" required> <br>
-
-            <label>Password</label> <br>
-            <input type="password" name="user_password" required> <br> <br>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="user_password" placeholder="Enter your password" required>
 
             <input type="submit" value="Login">
-
         </form>
 
-        <p>Not Registered? <a href="/register">Register Here</a> </p>
-
+        <p>Not Registered? <a href="/register">Register Here</a></p>
     </body>
-
 </html>

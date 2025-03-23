@@ -1,24 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-    
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Profile</title>
         <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
+        <!-- Add Google Fonts for better typography -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                text-align: center;
+                background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            h1 {
+                font-size: 2.5rem;
+                color: #333;
+                margin-bottom: 20px;
+            }
+            p {
+                font-size: 1.2rem;
+                color: #555;
+                margin-bottom: 30px;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                display: inline-block;
+                text-align: left;
+                padding: 20px;
+            }
+            li {
+                margin: 15px 0;
+            }
+            a {
+                text-decoration: none;
+                color: #333;
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: all 0.3s ease;
+            }
+            a:hover {
+                background: #007bff;
+                color: white;
+                transform: translateX(10px);
+            }
+            a i {
+                margin-right: 10px;
+                font-size: 1.2rem;
+            }
 
+            /* Media Queries for smaller devices */
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 2rem; /* Smaller font size for smaller screens */
+                }
+                p {
+                    font-size: 1rem; /* Smaller font size for the description */
+                }
+                ul {
+                    width: 90%; /* Make the list wider on smaller screens */
+                    padding: 20px; /* Reduce padding for smaller screens */
+                }
+                a {
+                    font-size: 0.9rem; /* Smaller font size for links */
+                }
+            }
+
+        </style>
+        <!-- Add Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
-
-    <body style="text-align: center; background-color: beige;">
-    
-        <p>What would you like to do?</p>
-        <ul type="square" style="display: inline-block; text-align: left;">
-
-            <li> <a href="/ner" style="text-decoration: none;">Named Entity Recognition</a> </li>
-            <li> <a href="/sentiment" style="text-decoration: none;">Sentiment Analysis</a> </li>
-            <li> <a href="/abuse" style="text-decoration: none;">Abuse IP Check</a> </li>
-
+    <body>
+        <h1>Welcome to Your Dashboard</h1>
+        <p>What would you like to do today?</p>
+        <ul>
+            <li>
+                <a href="/ner">
+                    <i class="fas fa-tag"></i> Named Entity Recognition
+                </a>
+            </li>
+            <li>
+                <a href="/sentiment">
+                    <i class="fas fa-smile"></i> Sentiment Analysis
+                </a>
+            </li>
+            <li>
+                <a href="/abuse">
+                    <i class="fas fa-shield-alt"></i> Abuse IP Check
+                </a>
+            </li>
         </ul>
-    
     </body>
-
 </html>
