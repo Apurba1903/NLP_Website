@@ -26,9 +26,22 @@ def perform_registration():
     response = dbo.insert(name, email, password)
     
     if response:
-        return 'Registration Successful'
+        return render_template('login.html', message='Registered Successfully. Kindly Login.')
     else:
-        return 'Email already exists'
+        return render_template('register.html', message='Email Already Exists. Kindly Login.')
+    
+    
+@app.route('/perform_login', methods=['post'])
+def perform_login():
+    email = request.form.get('user_email')
+    password = request.form.get('user_password')
+    
+    response = dbo.search(email, password)
+    
+    if response:
+        return 'Welcome'
+    else:
+        return render_template('login.html', message='Incorrect Email / Password.')
 
 
 
