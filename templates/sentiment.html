@@ -4,11 +4,36 @@
         <meta charset="UTF-8">
         <title>Sentiment Analysis</title>
         <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
-
     </head>
     <body style="text-align: center; background-color: beige;">
         
+        <h1>Sentiment Analysis</h1>
+        <form action="/perform_sentiment" method="post">
+            <br>
+            <label>Type Your Text Here</label> <br> <br>
+            <textarea name="sentiment_text" rows="10" cols="50"></textarea> <br> <br>
+            <input type="submit" value="Analyze Sentiment">
+        </form>
+    
+        {% if response %}
+            <h2>Sentiment Analysis Results:</h2>
+            <div style="text-align: left; display: inline-block;">
+                <ul>
+                    {% if response.get('error') %}
+                        <li><strong>Error:</strong> {{ response.error }}</li>
+                    {% else %}
+                        <li><strong>Sentiment Type:</strong> {{ response.get('type', 'N/A') }}</li>
+                        <li><strong>Score:</strong> {{ response.get('score', 'N/A') | round(3) }}</li>                        
+                        <li><strong>Keywords:</strong></li>
+                        <ul>
+                            {% for keyword in response.get('keywords', []) %}
+                                <li>{{ keyword.get('word', 'N/A') }} (Score: {{ keyword.get('score', 'N/A') | round(3) }})</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
 
-        
     </body>
 </html>

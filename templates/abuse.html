@@ -2,13 +2,45 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Abuse Detection</title>
+        <title>Abuse IP Check</title>
         <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
-
     </head>
     <body style="text-align: center; background-color: beige;">
         
+        <h1>Abuse IP Check</h1>
+        <form action="/perform_abuse_check" method="post">
+            <br>
+            <label>Enter IP Address</label> <br> <br>
+            <input type="text" name="abuse_ip" placeholder="e.g., 118.25.6.39"> <br> <br>
+            <input type="submit" value="Check IP">
+        </form>
+    
+        {% if response %}
+            <h2>Abuse IP Check Results:</h2>
+            <div style="text-align: left; display: inline-block;">
+                <ul>
+                    {% if response.get('error') %}
+                        <li><strong>Error:</strong> {{ response.error }}</li>
+                    {% elif response.data %}
+                        <li><strong>IP Address:</strong> {{ response.data.get('ipAddress', 'N/A') }}</li>
+                        <li><strong>Is Public:</strong> {{ response.data.get('isPublic', 'N/A') }}</li>
+                        <li><strong>IP Version:</strong> {{ response.data.get('ipVersion', 'N/A') }}</li>
+                        <li><strong>Is Whitelisted:</strong> {{ response.data.get('isWhitelisted', 'N/A') }}</li>
+                        <li><strong>Abuse Confidence Score:</strong> {{ response.data.get('abuseConfidenceScore', 'N/A') }}</li>
+                        <li><strong>Country Code:</strong> {{ response.data.get('countryCode', 'N/A') }}</li>
+                        <li><strong>Usage Type:</strong> {{ response.data.get('usageType', 'N/A') }}</li>
+                        <li><strong>ISP:</strong> {{ response.data.get('isp', 'N/A') }}</li>
+                        <li><strong>Domain:</strong> {{ response.data.get('domain', 'N/A') }}</li>
+                        <li><strong>Hostnames:</strong> {{ response.data.get('hostnames', 'N/A') | join(', ') }}</li>
+                        <li><strong>Total Reports:</strong> {{ response.data.get('totalReports', 'N/A') }}</li>
+                        <li><strong>Distinct Users:</strong> {{ response.data.get('numDistinctUsers', 'N/A') }}</li>
+                        <li><strong>Last Reported At:</strong> {{ response.data.get('lastReportedAt', 'N/A') }}</li>
+                    {% else %}
+                        <li>No data available.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
 
-        
     </body>
 </html>
