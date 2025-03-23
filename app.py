@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from db import Database
 from api import API
 
@@ -6,10 +6,11 @@ from api import API
 app = Flask(__name__)
 dbo = Database()
 api = API()
-
+app.secret_key = 'run_por_favor'
 
 @app.route('/')
 def index():
+
     return render_template('login.html')
 
 
@@ -40,6 +41,7 @@ def perform_login():
     response = dbo.search(email, password)
     
     if response:
+        session['logged_in'] = 1
         return redirect('/profile')
     else:
         return render_template('login.html', message='Incorrect Email / Password.', message_type='error')
@@ -47,27 +49,33 @@ def perform_login():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    if session.get('logged_in', 0) == 1:
+        return render_template('profile.html')
+    else:
+        return redirect('/')
 
 
 
 @app.route('/ner')
 def ner():
-    return render_template('ner.html')
+    if session.get('logged_in', 0) == 1:
+        return render_template('ner.html')
+    else:
+        return redirect('/')
 
 @app.route('/perform_ner', methods=['POST'])
 def perform_ner():
-    text = request.form.get('ner_text')
-    response = api.ner(text)  # Call the ner function from API class
-    
-    if "error" in response:
-        return "NER API failed. Try again later."
-    
-    
-    return render_template('ner.html', response=response)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    if session.get('logged_in', 0) == 1:
+        text = request.form.get('ner_text')
+        response = api.ner(text)  # Call the ner function from API class
+        
+        if "error" in response:
+            return "NER API failed. Try again later."
+        
+        
+        return render_template('ner.html', response=response)
+    else:
+        return redirect('/')
 
 
 
