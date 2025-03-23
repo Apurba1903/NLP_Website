@@ -14,7 +14,11 @@
         <h3>Login Here</h3>
 
         {% if message %}
-            <p style="color: green;">{{ message }}</p>
+            {% if message_type == 'error' %}
+                <p style="color: red;">{{ message }}</p>
+            {% else %}
+                <p style="color: green;">{{ message }}</p>
+            {% endif %}
         {% endif %}
 
         <form action="/perform_login" method="post">

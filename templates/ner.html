@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>NER</title>
+        <link rel="icon" href="{{ url_for('static', filename='cube-3d.png') }}" type="image/x-icon"/>
+
+    </head>
+    <body style="text-align: center; background-color: beige;">
+        
+        <form action="/perform_ner" method="post">
+            <br>
+            <label >Type Your Text Here</label> <br> <br>
+            <textarea name="ner_text"></textarea> <br> <br>
+            <input type="submit" value="Perform NER">
+
+        </form>
+    
+    {% if response %}
+        {% for i in response['entities']: %}
+                <p>{{ i['label'] + " : " + i['text'] }}</p>
+        {% endfor %}
+    {% endif %}
+
+    </body>
+</html>
