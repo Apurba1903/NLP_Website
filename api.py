@@ -1,27 +1,32 @@
 import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 class API:
     def __init__(self):
         # Named Entity Recognition (NER) API details
         self.ner_url = "https://namedentityrecognition.p.rapidapi.com/ner"
         self.ner_headers = {
-            "x-rapidapi-key": "8813f81427msh110825a259e2b2dp1ac084jsnbea18cba81a8",  
-            "x-rapidapi-host": "namedentityrecognition.p.rapidapi.com",
+            "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),  # Load API key from environment
+            "x-rapidapi-host": os.getenv("NER_API_HOST"),  # Load API host from environment
             "Content-Type": "application/json"
         }
 
         # Sentiment Analysis API details
         self.sentiment_url = "https://twinword-sentiment-analysis.p.rapidapi.com/analyze/"
         self.sentiment_headers = {
-            "x-rapidapi-key": "8813f81427msh110825a259e2b2dp1ac084jsnbea18cba81a8",
-            "x-rapidapi-host": "twinword-sentiment-analysis.p.rapidapi.com"
+            "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),  # Load API key from environment
+            "x-rapidapi-host": os.getenv("SENTIMENT_API_HOST")  # Load API host from environment
         }
 
         # IP Abuse Check API details
         self.abuse_ip_url = "https://abuse-ip-check.p.rapidapi.com/api/v2/check"
         self.abuse_ip_headers = {
-            "x-rapidapi-key": "8813f81427msh110825a259e2b2dp1ac084jsnbea18cba81a8",
-            "x-rapidapi-host": "abuse-ip-check.p.rapidapi.com"
+            "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),  # Load API key from environment
+            "x-rapidapi-host": os.getenv("ABUSE_IP_API_HOST")  # Load API host from environment
         }
 
     def ner(self, text):
